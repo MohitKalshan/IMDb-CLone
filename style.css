@@ -1,0 +1,18 @@
+/* Google Fonts - Poppins & Ubuntu */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,400;1,100&family=Ubuntu:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+}
+body{
+    background: linear-gradient(90deg, rgb(13, 67, 87),rgb(63, 60, 60));
+}
+
+#search-bar{
+    width:45rem;
+}
+#show-favourites{
+    color: aliceblue;
+    /* background: ; */
+}

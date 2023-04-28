@@ -6,11 +6,15 @@
     margin: 0;
 }
 body{
-    background: linear-gradient(90deg, rgb(13, 67, 87),rgb(63, 60, 60));
+    background: dodgerblue;
+    /* linear-gradient(90deg, dodgerblue,gold); */
 }
-
+#title{
+    color:gold;
+}
 #search-bar{
     width:45rem;
+    margin-right: 15rem;
 }
 #show-favourites{
     color: aliceblue;

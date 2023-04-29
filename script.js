@@ -43,22 +43,13 @@
       // suggestionsContainer.style.display = "flex";
       suggestionsContainer.style.cssText = `
       display: flex;
-      justify-content: space-between;
-      margin: 3px;
+      // justify-content: space-between;
+      flex-wrap:wrap;
+      // margin: 3px;
     `;
     }
   });
-  // searchKeyword.addEventListener("keyup", function () {
-  //   let search = searchKeyword.value.trim();
-  //   console.log("search",search);
-  // //  if(searchKeyword.length< 2) return;
-  //  (async () => {
-  //         let data = await fetchMovies(search);
-  //         addToSuggestionContainerDOM(data);
-  //       })();
-  //       suggestionsContainer.style.display = "grid";
-  // });
-
+ 
   // Fetches data from api and calls function to add it in
   async function fetchMovies(search) {
     const url = `https://www.omdbapi.com/?i=tt3896198&apikey=e8e9899f&t=${search}`;
@@ -94,14 +85,14 @@
       movieCard.setAttribute("class", "text-decoration");
 
       movieCard.innerHTML = `
-        <div class="card my-2 mx-2 " data-id = " ${data.Title} " style="width: 18rem;">
+        <div class="card my-2 mx-2 " data-id = "${data.Title}" style="width: 18rem;">
         <a href="./MovieInfo/MovieInfo.html">
           <img
             src="${data.Poster} "
             class="card-img-top"
             alt="..."
             data-id = "${data.Title} "
-            width="100px" height="350px"
+            width="150px" height="350px"
           />
           <div class="card-body text-start">
             <h5 class="card-title" >
@@ -109,7 +100,7 @@
             </h5>
             <p class="card-text">
               <i class="fa-solid fa-star">
-                <span id="rating">&nbsp;${data.imdbRating}</span>
+                <span id="rating">${data.imdbRating}</span>
               </i>
               <button class="fav-btn mx-2">
                 <i class="fa-solid fa-heart add-fav" data-id="${data.Title}"></i>

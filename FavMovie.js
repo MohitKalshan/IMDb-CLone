@@ -4,13 +4,29 @@ const showFavourites = document.getElementById("favorites-section");
 const emptyFavText = document.getElementById("empty-fav-text");
 
 addToFavDOM();
-// showEmptyText();
+showEmptyText();
+
 let favMovieArray = [];
+
 function showEmptyText() {
   if (favMoviesContainer.innerHTML == "") {
     emptyFavText.style.display = "block";
   } else {
     emptyFavText.style.display = "none";
+  }
+}
+  
+ // Fetches data from api and calls function to add it in
+ async function fetchMovies(search) {
+  const url = `https://www.omdbapi.com/?i=tt3896198&apikey=e8e9899f&t=${search}`;
+  console.log(url)
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (err) {
+    console.log(err);
   }
 }
 

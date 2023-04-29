@@ -1,5 +1,4 @@
 "use strict";
-(function () {
   const title = document.getElementById("title");
   title.innerHTML = localStorage.getItem("movieName");
   const year = document.getElementById("year");
@@ -27,8 +26,8 @@
       directorsName.innerHTML = data.Director;
       castName.innerHTML = data.Actors;
       genre.innerHTML = data.Genre;
-    } catch (err) {
+    } 
+    catch (err) {
       console.log(err);
     }
   }
-})();

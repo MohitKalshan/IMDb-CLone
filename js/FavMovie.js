@@ -35,7 +35,7 @@ async function handleFavBtn(e) {
   const target = e.target;
 
   let data = await fetchMovies(target.dataset.id);
-
+console.log(data)
   let favMoviesLocal = localStorage.getItem("favMoviesList");
 
   if (favMoviesLocal) {
@@ -86,7 +86,7 @@ function addToFavDOM() {
     />
     <div class="movie-card-details">
       <p class="movie-name mt-3 mb-0">
-       <a href = "movie.html" class="fav-movie-name" data-id="${movie.Title}">${movie.Title}<a> 
+       <a href = "./MovieInfo/MovieInfo.html" class="fav-movie-name" data-id="${movie.Title}">${movie.Title}<a> 
       </p>
       <small class="text-muted">${movie.Year}</small>
     </div>
@@ -94,7 +94,6 @@ function addToFavDOM() {
         <i class="fa-solid fa-trash-can" data-id="${movie.Title}"></i>
     </div>
     `;
-
       favMoviesContainer.prepend(div);
     });
   }

@@ -11,7 +11,9 @@
   const genre = document.getElementById("genre");
 
   fetchMovies(title.innerHTML);
-
+ console.log('a',window.location)
+ console.log('a',window.location.search)
+ 
   async function fetchMovies(search) {
     const url = `https://www.omdbapi.com/?i=tt3896198&apikey=e8e9899f&t=${search}`;
     try {
@@ -31,3 +33,14 @@
       console.log(err);
     }
   }
+//   function getParameters() {
+//     let urlString = 
+// "https://www.example.com/login.php?a=GeeksforGeeks&b=500&c=Hello Geeks";
+//     let paramString = urlString.split('?')[1];
+//     let params_arr = paramString.split('&');
+//     for(let i = 0; i < params_arr.length; i++) {
+//         let pair = params_arr[i].split('=');
+//         console.log("Key is:" + pair[0]);
+//         console.log("Value is:" + pair[1]);
+//     }
+// }

@@ -2,28 +2,21 @@
 // (function () {
   const searchKeyword = document.getElementById("search");
   const suggestionsContainer = document.getElementById("card-container");
-  const favMoviesContainer = document.getElementById("fav-movies-container");
   const emptyText = document.getElementById("empty-search-text");
+  // const favMoviesContainer = document.getElementById("fav-movies-container");
 //   const showFavourites = document.getElementById("favorites-section");
 //   const emptyFavText = document.getElementById("empty-fav-text");
 
 //   addToFavDOM();
 //   showEmptyText();
   let suggestionList = [];
-  let favMovieArray = [];
+  // let favMovieArray = [];
 
   searchKeyword.addEventListener("keydown", (event) => {
     if (event.key == "Enter") {
       event.preventDefault();
     }
   });
-//   function showEmptyText() {
-//     if (favMoviesContainer.innerHTML == "") {
-//       emptyFavText.style.display = "block";
-//     } else {
-//       emptyFavText.style.display = "none";
-//     }
-//   }
 
   // Event listner on search
   searchKeyword.addEventListener("keyup", function () {
@@ -42,8 +35,9 @@
 
       // suggestionsContainer.style.display = "flex";
       suggestionsContainer.style.cssText = `
+      width:100vw;
       display: flex;
-      // justify-content: space-between;
+      // justify-content: space-evenly;
       flex-wrap:wrap;
       // margin: 3px;
     `;
@@ -82,21 +76,21 @@
       }
       suggestionList.push(data);
       const movieCard = document.createElement("div");
-      movieCard.setAttribute("class", "text-decoration");
+      // movieCard.setAttribute("class", "text-decoration");
 
       movieCard.innerHTML = `
-        <div class="card my-2 mx-2 " data-id = "${data.Title}" style="width: 18rem;">
-        <a href="./MovieInfo/MovieInfo.html">
+        <div class="card my-2 m-2" data-id = "${data.Title}" style="width: 18rem;">
+        <a href="MovieInfo.html" class="p-1">
           <img
             src="${data.Poster} "
             class="card-img-top"
-            alt="..."
-            data-id = "${data.Title} "
-            width="150px" height="350px"
+            alt="Movie Poster"
+            data-id = "${data.Title}"
+            width="150px" height="350px
           />
           <div class="card-body text-start">
             <h5 class="card-title" >
-              <a href="./MovieInfo/MovieInfo.html" data-id = "${data.Title} "> ${data.Title}  </a>
+              <a href="MovieInfo.html" data-id = "${data.Title}">${data.Title}</a>
             </h5>
             <p class="card-text">
               <i class="fa-solid fa-star">

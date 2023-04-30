@@ -9,13 +9,18 @@ body{
     background: dodgerblue;
     /* linear-gradient(90deg, dodgerblue,gold); */
 }
-#title{
+/* Navbar styling */
+#site-title{
     color:gold;
 }
+
 #search-bar{
+    margin-right: 10rem;
+} 
+#search{
     width:45rem;
-    margin-right: 15rem;
 }
+/* Navbar end */
 #show-favourites{
     color: aliceblue;
     /* background: ; */

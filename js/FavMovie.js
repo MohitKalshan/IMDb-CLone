@@ -1,7 +1,13 @@
 const favMoviesContainer = document.getElementById("fav-movies-container");
-const emptyText = document.getElementById("empty-search-text");
 const showFavourites = document.getElementById("favorites-section");
 const emptyFavText = document.getElementById("empty-fav-text");
+
+console.log("a", window.location);
+const pageHref = window.location.search;
+// Construct a new object and pass the page href to URLSearchParams
+const searchParams = new URLSearchParams(pageHref);
+const movieID = searchParams.get("i");
+console.log("i = ", movieID);
 
 addToFavDOM();
 showEmptyText();
@@ -17,25 +23,21 @@ function showEmptyText() {
 }
   
  // Fetches data from api and calls function to add it in
- async function fetchMovies(search) {
-  const url = `https://www.omdbapi.com/?i=tt3896198&apikey=e8e9899f&t=${search}`;
-  console.log(url)
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-    console.log(data);
+ async function fetchMoviesByID() {
+  const url = `https://www.omdbapi.com/?apikey=e8e9899f&i=${movieID}`;
+  const response = await fetch(url);
+  const data = await response.json();
+  console.log(data);
     return data;
-  } catch (err) {
-    console.log(err);
-  }
 }
+
 
 // Add to favourite of localStorage
 async function handleFavBtn(e) {
   const target = e.target;
-
-  let data = await fetchMovies(target.dataset.id);
-console.log(data)
+  console.log(target);
+  let data = await fetchMoviesByID(target);
+  console.log(data)
   let favMoviesLocal = localStorage.getItem("favMoviesList");
 
   if (favMoviesLocal) {
@@ -70,15 +72,8 @@ function addToFavDOM() {
   if (favList) {
     favList.forEach((movie) => {
       const div = document.createElement("div");
-      div.classList.add(
-        "fav-movie-card",
-        "d-flex",
-        "justify-content-between",
-        "align-content-center",
-        "my-2"
-      );
-      div.innerHTML = `
-   
+
+      div.innerHTML = ` 
     <img
       src="${movie.Poster}"
       alt=""
@@ -142,3 +137,4 @@ async function handleClickListner(e) {
   // Event listner on whole document
   document.addEventListener("click", handleClickListner);
 }
+

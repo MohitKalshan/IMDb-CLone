@@ -1,112 +1,54 @@
 "use strict";
-// (function () {
-  const searchKeyword = document.getElementById("search");
-  const suggestionsContainer = document.getElementById("card-container");
-  const emptyText = document.getElementById("empty-search-text");
-  // const favMoviesContainer = document.getElementById("fav-movies-container");
-//   const showFavourites = document.getElementById("favorites-section");
-//   const emptyFavText = document.getElementById("empty-fav-text");
 
-//   addToFavDOM();
-//   showEmptyText();
-  let suggestionList = [];
-  // let favMovieArray = [];
+const searchKeyword = document.getElementById("search");
+const suggestionsContainer = document.getElementById("card-container");
+const searchList = document.getElementById('search-list');
 
-  searchKeyword.addEventListener("keydown", (event) => {
-    if (event.key == "Enter") {
-      event.preventDefault();
-    }
-  });
-
-  // Event listner on search
-  searchKeyword.addEventListener("keyup", function () {
-    let search = searchKeyword.value.trim();
-    if (search === "") {
-      emptyText.style.display = "block";
-      suggestionsContainer.innerHTML = "";
-      // clears the previous movies from array
-      suggestionList = [];
-    } else {
-      emptyText.style.display = "none";
-      (async () => {
-        let data = await fetchMovies(search);
-        addToSuggestionContainerDOM(data);
-      })();
-
-      // suggestionsContainer.style.display = "flex";
-      suggestionsContainer.style.cssText = `
-      width:100vw;
-      display: flex;
-      // justify-content: space-evenly;
-      flex-wrap:wrap;
-      // margin: 3px;
-    `;
-    }
-  });
- 
-  // Fetches data from api and calls function to add it in
-  async function fetchMovies(search) {
-    const url = `https://www.omdbapi.com/?apikey=e8e9899f&t=${search}`;
-    console.log(url)
-    try {
-      const response = await fetch(url);
-      const data = await response.json();
-      console.log(data);
-      return data;
-    } catch (err) {
-      console.log(err);
-    }
+let suggestionList = [];
+// Event listner on search
+searchKeyword.addEventListener("keyup", function () {
+  let searchTerm = searchKeyword.value.trim();
+  if (searchTerm.length < 2) {
+    return;
+  } else {
+    fetchMovies(searchTerm);
   }
+});
 
-  // Shows in suggestion container DOM
-  function addToSuggestionContainerDOM(data) {
-    // document.getElementById("empty-fav-text").style.display = "none";
-    let isPresent = false;
-
-    // to check if the movie is already present in the suggestionList array
-    suggestionList.forEach((movie) => {
-      if (movie.Title == data.Title) {
-        isPresent = true;
-      }
-    });
-
-    if (!isPresent && data.Title != undefined) {
-      if (data.Poster == "N/A") {
-        data.Poster = "./image/not-found.png";
-      }
-      suggestionList.push(data);
-      const movieCard = document.createElement("div");
-      // movieCard.setAttribute("class", "text-decoration");
-
-      movieCard.innerHTML = `
-        <div class="card my-2 m-2" data-id = "${data.Title}" style="width: 18rem;">
-        <a href="MovieInfo.html" class="p-1">
-          <img
-            src="${data.Poster} "
-            class="card-img-top"
-            alt="Movie Poster"
-            data-id = "${data.Title}"
-            width="150px" height="350px
-          />
-          <div class="card-body text-start">
-            <h5 class="card-title" >
-              <a href="MovieInfo.html" data-id = "${data.Title}">${data.Title}</a>
-            </h5>
-            <p class="card-text">
-              <i class="fa-solid fa-star">
-                <span id="rating">${data.imdbRating}</span>
-              </i>
-              <button class="fav-btn mx-2">
-                <i class="fa-solid fa-heart add-fav" data-id="${data.Title}"></i>
-              </button>
-            </p>
-          </div>
-        </a>
-      </div>
-    `;
-    // add at beginning of suggestion
-      suggestionsContainer.prepend(movieCard);
-    }
-      
+// Fetches data from api and calls function to add it in
+async function fetchMovies(searchTerm) {
+  const url = `https://www.omdbapi.com/?s=${searchTerm}&apikey=e8e9899f`;
+  console.log(url);
+  const response = await fetch(`${url}`);
+  const data = await response.json();
+  const results = data.Search;
+  // console.log("Results: ", results);
+  suggestionList =results;
+  displayMovieList(results);
 }
-// )();
+
+// Display search movies list
+function displayMovieList(movies) {
+  // console.log("displayMovie: ", movies);
+  movies.map((item) => {
+    let movieListItem = document.createElement("div");
+    movieListItem.classList.add("search-list-item");
+    movieListItem.innerHTML = `
+      <div class="search-item-container">
+        <a href="MovieInfo.html?i=${item.imdbID}"> 
+          <div class = "search-item">
+            <img src = "${(item.Poster != "N/A") ? item.Poster : "../image/not-found.png"}">
+            <div clas="">
+            <h4>${item.Title}</h4>
+            ${item.Year}</div>
+          </div>
+          </a>
+          <a href="FavMovie.html?i=${item.imdbID}"> 
+          <button class="btn btn-info" type="submit"">Add</button>
+          </a>
+      </div>
+        `;
+    suggestionsContainer.appendChild(movieListItem);
+  });
+}
+

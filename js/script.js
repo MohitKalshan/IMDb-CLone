@@ -2,11 +2,12 @@
 
 const searchKeyword = document.getElementById("search");
 const suggestionsContainer = document.getElementById("card-container");
-const searchList = document.getElementById('search-list');
+const searchList = document.getElementById("search-list");
+let imdbID = [];
 
 let suggestionList = [];
 // Event listner on search
-searchKeyword.addEventListener("keyup", function () {
+searchKeyword.addEventListener("change", function (e) {
   let searchTerm = searchKeyword.value.trim();
   if (searchTerm.length < 2) {
     return;
@@ -18,12 +19,11 @@ searchKeyword.addEventListener("keyup", function () {
 // Fetches data from api and calls function to add it in
 async function fetchMovies(searchTerm) {
   const url = `https://www.omdbapi.com/?s=${searchTerm}&apikey=e8e9899f`;
-  console.log(url);
   const response = await fetch(`${url}`);
   const data = await response.json();
   const results = data.Search;
   // console.log("Results: ", results);
-  suggestionList =results;
+  suggestionList = results;
   displayMovieList(results);
 }
 
@@ -36,14 +36,18 @@ function displayMovieList(movies) {
       <div class="search-item-container">
         <a href="MovieInfo.html?i=${item.imdbID}">
           <div class = "search-item">
-            <img src="${(item.Poster != "N/A") ? item.Poster : "../image/not-found.png"}">
+            <img src="${
+              item.Poster != "N/A" ? item.Poster : "../image/not-found.png"
+            }">
             <div class="">
               <h4>${item.Title}</h4>
               ${item.Year}
             </div>
           </div>
         </a>
-        <button class="btn btn-info add-btn" data-imdbid="${item.imdbID}" type="submit">Add</button>
+        <button class="btn btn-info add-btn" data-imdbid="${
+          item.imdbID
+        }" type="submit">Add</button>
       </div>
     `;
     suggestionsContainer.appendChild(movieListItem);
@@ -52,9 +56,8 @@ function displayMovieList(movies) {
     let addBtn = movieListItem.querySelector(".add-btn");
     addBtn.addEventListener("click", function (event) {
       event.preventDefault();
-      let imdbID = event.target.dataset.imdbid;
-      localStorage.setItem("imdbID", imdbID);
-      window.location.href = "FavMovie.html";
+      imdbID.push(event.target.dataset.imdbid);
+      localStorage.setItem("imdbID", JSON.stringify(imdbID));
     });
   });
 }
